@@ -1,0 +1,26 @@
+{
+  "name": "tag-builder",
+  "version": "1.0.0",
+  "description": "Generate URL with the parameters",
+  "main": "script.js",
+  "scripts": {
+    "test": "run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrielma19/tag_builder.git"
+  },
+  "keywords": [
+    "tag-builder",
+    "tag",
+    "builder",
+    "url",
+    "vue"
+  ],
+  "author": "Gabriel Marcos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gabrielma19/tag_builder/issues"
+  },
+  "homepage": "https://github.com/gabrielma19/tag_builder#readme"
+}
