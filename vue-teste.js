@@ -1,18 +1,31 @@
 var app = new Vue({
-	el:'#form-js',
+	el:'#app',
   data: {
-  	input1: '',
-    input2: '',
-    input3: '',
-    input4: '',
-    input5: '',
-    input6: '',
-    input7: '',
-    result: ''
+  	link: 'http://loja.brastemp.com.br/',
+    date:'',
+    UTMIcheck: true,
+    UTM:{
+      source: '',
+      medium: '',
+      campaing: '',
+      UTMI: ''
+    },
+    currently: '',
+    
+    results:[]
   },
   methods:{
-		buildUtm: function(){
-      this.result = this.input1 + this.input2 + this.input3 + this.input4 + this.input5 + this.input6 + this.input7
+		buildUtm: function() {
+      this.result = 
+      this.link + "?utm_source=" +
+      this.UTM.source + this.date + "_principal&utm_medium=" + 
+      this.UTM.medium + "&utm_campaign=" + this.UTM.campaing + 
+      this.UTM.UTMI  
+      this.results.push(this.result)
+    },
+    remove: function(index) {
+      this.results.splice(index, 1);
     }
   }
+
 });
