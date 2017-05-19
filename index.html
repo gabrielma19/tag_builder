@@ -21,28 +21,10 @@
                 <input type="text" class="form-control link_principal" v-model="link" >
               </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">UTM SOURCE</label>
+          <div class="form-group" v-for="param in params">
+            <label class="col-sm-2 control-label" v-text="param.key" ></label>
               <div class="col-sm-8">
-                <input type="text" class="form-control utm_source" placeholder="utm_source" v-model="UTM.source">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Data</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control date_campanha" placeholder="Data do disparo" v-model="date">
-              </div>
-          </div>
-          <div class="form-group">
-            <label for="utmMedium" class="col-sm-2 control-label">UTM MEDIUM</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control utm_medium" placeholder="utm_medium" v-model="UTM.medium">
-              </div>
-          </div>
-          <div class="form-group">
-            <label for="utmCampaing" class="col-sm-2 control-label">utm_campaign</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control utm_campaign" placeholder="utm_campaign" v-model="UTM.campaing">
+                <input type="text" class="form-control utm_source" :placeholder="param.key" v-model="param.value">
               </div>
           </div>
           <div class="form-group">
@@ -59,12 +41,13 @@
           <div class="form-group">
             <label for="result" class="col-sm-2 control-label">Resultado:</label>
               <div class="col-sm-8">
-                <span class="label label-primary" v-text="currently"></span>
+                <span class="label label-primary" v-text="result"></span>
               </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-success" id="gerar" @click.prevent="buildUtm">Gerar URL</button>
+              <button type="submit" class="btn btn-success" id="gerar" @click.prevent="save">Gerar URL</button>
+              <button type="button" class="btn btn-warning" id="gerar" @click="">LIMPAR</button>
             </div>
           </div>
         </form>
@@ -83,9 +66,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(result, index) in results">
+                <tr v-for="(r, index) in results">
                   <th>{{ index + 1 }}</th>
-                  <td v-text="result"></td>
+                  <td v-text="r"></td>
                   <td>
                     <button class="btn btn-info" type="button">Copy</button>
                     <button type="button" class="btn btn-warning">Edit</button>
