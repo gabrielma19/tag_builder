@@ -21,12 +21,16 @@
                 <input type="text" class="form-control link_principal" v-model="link" >
               </div>
           </div>
-          <div class="form-group" v-for="param in params">
-            <label class="col-sm-2 control-label" v-text="param.key" ></label>
+
+
+          <div class="form-group" v-for="field in fields">
+            <label class="col-sm-2 control-label">{{ field.label }}</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control utm_source" :placeholder="param.key" v-model="param.value">
+                <input type="text" class="form-control utm_source" :placeholder="field.label" v-model="field.value">
               </div>
           </div>
+
+
           <div class="form-group">
             <label for="utmUtmi" class="col-sm-2 control-label">UTMI</label>
             <div class="col-lg-8">
@@ -40,14 +44,14 @@
           </div>
           <div class="form-group">
             <label for="result" class="col-sm-2 control-label">Resultado:</label>
-              <div class="col-sm-8">
-                <span class="label label-primary" v-text="result"></span>
+              <div class="col-lg-8 input-group">
+                <span class="label label-primary" style="font-size: 14px;" v-text="result"></span>
               </div>
           </div>
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-success" id="gerar" @click.prevent="save">Gerar URL</button>
-              <button type="button" class="btn btn-warning" id="gerar" @click="">LIMPAR</button>
+              <button type="submit" class="btn btn-success" @click.prevent="save">Gerar URL</button>
+              <button type="button" class="btn btn-warning" @click="">LIMPAR</button>
             </div>
           </div>
         </form>

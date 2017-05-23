@@ -1,26 +1,24 @@
-var defaults = ['Date', 'Campaing']
-var tags = ['utm_source=whirlpool_emkt_home_', '_principal&utm_medium=emkt&utm_campaign=']
-
 var app = new Vue({
 	el:'#app',
   data: {
   	link: 'http://loja.brastemp.com.br/',
-    params: [],
     UTMIcheck: true,
-    results:[]
-    
+    results:[],
+    template: {
+      fields: [
+        {
+          label: 'Date',
+          value: ''
+        }, 
+        {
+          label: 'Campaing',
+          value: ''
+        },
+      ],
+      format: '?&utm_source=whirlpool_emkt_home_$0_principal&utm_medium=emkt&utm_campaign=$1'
+    }
   },
-  created: function(){
-    this.setup()
-  },
-
   methods:{
-    setup: function(){
-      defaults.forEach(function(element) {
-        this.params.push({key:element, value:''})
-      }, this);
-    },
-
     remove: function(index) {
       this.results.splice(index, 1);
     },
@@ -30,12 +28,17 @@ var app = new Vue({
     }
   },
   computed:{
-    result: function(){
-
-      return this.link +this.params.map(function(tags){
-        return tags.key + "=" + tags.value
-      }).join("&")
-      
+    fields: function () {
+      return this.template.fields;
+    },
+    format: function () {
+      return this.template.format;
+    },
+    result: function () {
+      return this.link + this.format.replace(/\$\d/g, function (param) {
+        var index = +(param.replace(/\$/, ''));
+        return this.fields[index].value || '';
+      }.bind(this))
     }
   }
 
