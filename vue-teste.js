@@ -25,6 +25,9 @@ var app = new Vue({
 
     save: function(){
       this.results.push(this.result)
+    },
+    edit: function(index){
+      this.results.edit()
     }
   },
   computed:{
