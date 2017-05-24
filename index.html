@@ -8,52 +8,43 @@
   <link rel="stylesheet" href="vendor/css/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/css/bootstrap-theme.min.css">
   <script src="vendor/vue.js"></script>
+  <script src="vendor/clipboard.js"></script>
 </head>
 <body>
-  <div class="container" id="app">
+  <div id="cpy"></div>
+  <div id="app" class="container">
     <div class="row">
       <div class="col-md-12">
         <h1>Brastemp</h1>
         <form class="form-horizontal">
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Link Principal</label>
-              <div class="col-sm-8" id="app">
-                <input type="text" class="form-control link_principal" v-model="link" >
-              </div>
-          </div>
 
-
-          <div class="form-group" v-for="field in fields">
-            <label class="col-sm-2 control-label">{{ field.label }}</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control utm_source" :placeholder="field.label" v-model="field.value">
-              </div>
-          </div>
-
-
-          <div class="form-group">
-            <label for="utmUtmi" class="col-sm-2 control-label">UTMI</label>
-            <div class="col-lg-8">
-              <div class="input-group">
+          <div v-for="(field, index) in tag.fields" :keys="index" class="form-group">
+            <label :for="'field-' + index" class="control-label col-sm-2">{{ field.label }}</label>
+            <div class="col-sm-8">
+              <div v-if="field.optional" class="input-group">
                 <span class="input-group-addon">
-                  <input type="checkbox" v-model="UTMIcheck">
+                  <input v-model="field.active" type="checkbox">
                 </span>
-                <input type="text" class="form-control" :disabled="!UTMIcheck">
+                <input v-model="field.value" :id="'field-' + index" :disabled="!field.active" class="form-control" type="text">
               </div>
+              <input v-else v-model="field.value" :id="'field-' + index" class="form-control" type="text">
             </div>
           </div>
+
           <div class="form-group">
             <label for="result" class="col-sm-2 control-label">Resultado:</label>
               <div class="col-lg-8 input-group">
-                <span class="label label-primary" style="font-size: 14px;" v-text="result"></span>
+                <span class="label label-primary" style="font-size: 14px;">{{ formatTag(tag) }}</span>
               </div>
           </div>
+
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-success" @click.prevent="save">Gerar URL</button>
-              <button type="button" class="btn btn-warning" @click="">LIMPAR</button>
+              <button type="button" class="btn btn-warning" @click="clean">LIMPAR</button>
             </div>
           </div>
+
         </form>
       </div>
     </div>
@@ -70,13 +61,13 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(r, index) in results">
+                <tr v-for="(tag, index) in tags">
                   <th>{{ index + 1 }}</th>
-                  <td v-text="r"></td>
+                  <td :id="'tag-' + index">{{ formatTag(tag) }}</td>
                   <td>
-                    <button class="btn btn-info" type="button">Copy</button>
-                    <button type="button" class="btn btn-warning">Edit</button>
-                    <button class="btn btn-danger" type="button" @click="remove(index)">Delete</button>
+                    <button class="btn btn-info copy" type="button" :data-clipboard-target="'#tag-' + index">Copy</button>
+                    <button @click="edit(index)" class="btn btn-warning" type="button">Edit</button>
+                    <button @click="remove(index)" class="btn btn-danger" type="button">Delete</button>
                   </td>
                 </tr> 
               </tbody>
@@ -85,6 +76,6 @@
       </div>
     </div>
   </div>
-  <script src="vue-teste.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>
